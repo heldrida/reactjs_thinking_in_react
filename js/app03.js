@@ -37,9 +37,19 @@ var App = React.createClass({
     },
     
     handleSubmit: function (person) {
+    	/*
         var people = this.state.people;
         people.push(person);
         this.setState({ people: people });
+		*/
+
+        /*
+		 Simpler but only useful when add/remove items
+		 http://stackoverflow.com/questions/26253351/correct-modification-of-state-arrays-in-reactjs
+		*/
+		this.setState({ 
+			people: this.state.people.concat(person)
+		});
     },
     
     render: function () {
