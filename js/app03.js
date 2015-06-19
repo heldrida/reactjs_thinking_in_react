@@ -1,9 +1,9 @@
 var Form = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return { name: '', age: '' };
     },
     
-    handleChange: function(fieldName) {
+    handleChange: function (fieldName) {
         return function(e) {
             var state = {};
             state[fieldName] = e.target.value;
@@ -11,14 +11,14 @@ var Form = React.createClass({
         }.bind(this);
     },
     
-    handleSubmit: function(e) {
+    handleSubmit: function (e) {
         e.preventDefault();
         var person = { name: this.state.name, age: this.state.age };
         this.props.onSubmit(person);
         this.setState(this.getInitialState());
     },
     
-    render: function() {
+    render: function () {
         return (
             <form>
                 <input placeholder="name" type="text" value={this.state.name} onChange={this.handleChange('name')} />
@@ -30,30 +30,36 @@ var Form = React.createClass({
 });
 
 var App = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
-            people: []
+            people: this.props.people
         }
     },
     
-    handleSubmit: function(person) {
+    handleSubmit: function (person) {
         var people = this.state.people;
         people.push(person);
         this.setState({ people: people });
     },
     
-    render: function() {
+    render: function () {
         return (
             <div>
                 <ul>
-                    {this.state.people.map(function(p) { return (
-                        <li>{p.name} ({p.age} years old)</li>
-                    ); })}
+                    {
+                    	this.state.people.map(function (p) { 
+                    		return (
+        		                <li>{p.name} ({p.age} years old)</li>
+ 		                   	); 
+                    	})
+                    }
                 </ul>
                 <Form onSubmit={this.handleSubmit} />
             </div>
         );
     }
 });
+
+var PEOPLE = [{ name: 'Zelda', age: 12}, { name: 'Maverick', age: 32}];
  
-React.render(<App />, document.querySelector('#app03'));
+React.render(<App people={PEOPLE} />, document.querySelector('#app03'));
